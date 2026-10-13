@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>The Cake Durbar | Official 5-Star Experience</title>
+  <style>
+    :root {
+      --bg: #0c0b0a;
+      --card-bg: rgba(24, 20, 18, 0.88);
+      --gold-primary: #f59e0b;
+      --gold-gradient: linear-gradient(135deg, #fde68a 0%, #f59e0b 50%, #b45309 100%);
+      --gold-glow: rgba(245, 158, 11, 0.22);
+      --text-main: #fcfcfc;
+      --text-muted: #a8a29e;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --chip-bg: rgba(255, 255, 255, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 14px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      width: 100%;
+      max-width: 420px;
+      border-radius: 28px;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 35px var(--gold-glow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Brand Header */
+    .header {
+      padding: 24px 20px 14px;
+      text-align: center;
+      position: relative;
+    }
+
+    .brand-emblem {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-primary);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #291f18 0%, #120e0b 100%);
+      font-size: 28px;
+    }
+
+    .brand-title {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .verified-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      margin-top: 10px;
+      color: #e5e5ea;
+    }
+
+    .stars {
+      color: #f59e0b;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    /* 3-Step Micro Bar */
+    .steps-bar {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 20px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .step-num {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* Category & Controls */
+    .controls {
+      padding: 0 18px 10px;
+    }
+
+    .pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .pills::-webkit-scrollbar { display: none; }
+
+    .pill {
+      background: var(--chip-bg);
+      border: 1px solid var(--border-color);
+      color: #a8a29e;
+      padding: 7px 13px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .pill.active {
+      background: var(--gold-gradient);
+      color: #0c0b0a;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+      font-weight: 700;
+    }
+
+    .lang-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
+
+    .segmented-control {
+      display: flex;
+      background: #14110e;
+      padding: 3px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .seg-btn {
+      background: transparent;
+      border: none;
+      color: #78716c;
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .seg-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    /* Review Card Box */
+    .review-wrapper {
+      padding: 0 18px 18px;
+    }
+
+    .review-box {
+      position: relative;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 16px 48px 16px 16px;
+      min-height: 98px;
+      display: flex;
+      align-items: center;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .review-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #f5f5f4;
+      font-weight: 500;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .refresh-btn {
+      position: absolute;
+      right: 12px;
+      top: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .refresh-btn:active {
+      transform: rotate(180deg) scale(0.92);
+      background: rgba(245, 158, 11, 0.2);
+    }
+
+    /* CTA Button */
+    .cta-btn {
+      margin-top: 14px;
+      width: 100%;
+      padding: 15px;
+      border-radius: 16px;
+      border: none;
+      background: var(--gold-gradient);
+      color: #0c0b0a;
+      font-size: 14.5px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .cta-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
+    }
+
+    .cta-btn.copied {
+      background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+    }
+
+    /* Bottom Hub */
+    .footer-nav {
+      background: rgba(12, 11, 10, 0.95);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 14px 10px 16px;
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 10.5px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn:active {
+      color: var(--gold-primary);
+    }
+
+    .nav-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:active .nav-icon {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--gold-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Brand Header -->
+    <div class="header">
+      <div class="brand-emblem">🎂</div>
+      <h1 class="brand-title">The Cake Durbar</h1>
+      <p class="brand-subtitle">Artisan Cakes • Fresh Bakes • Bhopal</p>
+
+      <div class="verified-pill">
+        <span style="color:#4285F4;font-weight:bold;">G</span> Google Verified Rating 
+        <span class="stars">★★★★★</span>
+      </div>
+    </div>
+
+    <!-- 3-Step Guide -->
+    <div class="steps-bar">
+      <div class="step-item"><span class="step-num">1</span> Pick Topic</div>
+      <div class="step-item"><span class="step-num">2</span> Tap Button</div>
+      <div class="step-item"><span class="step-num">3</span> Paste & Post</div>
+    </div>
+
+    <!-- Category Controls -->
+    <div class="controls">
+      <div class="pills">
+        <button class="pill active" onclick="setCategory('all')">✨ ALL</button>
+        <button class="pill" onclick="setCategory('taste')">🍰 FRESH CAKES</button>
+        <button class="pill" onclick="setCategory('custom')">🎨 CUSTOM DESIGN</button>
+        <button class="pill" onclick="setCategory('service')">⚡ MIDNIGHT SERVICE</button>
+      </div>
+
+      <div class="lang-row">
+        <div class="segmented-control">
+          <button class="seg-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="seg-btn" id="btn-hi" onclick="setLang('hi')">HINGLISH</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Section -->
+    <div class="review-wrapper">
+      <div class="review-box">
+        <div class="review-text" id="review-content">Loading review...</div>
+        <button class="refresh-btn" onclick="shuffleReview()" title="Next Review">⟳</button>
+      </div>
+
+      <button class="cta-btn" id="copy-btn" onclick="copyAndRedirect()">
+        <span>📋</span> COPY & RATE 5-STAR
+      </button>
+    </div>
+
+    <!-- Quick Action Hub -->
+    <div class="footer-nav">
+      <a href="https://search.google.com/local/writereview?placeid=ChIJj7J_eABDfDkRUNJROTNzRuY" class="nav-btn" target="_blank">
+        <div class="nav-icon">📍</div>
+        Bakery Map
+      </a>
+      <a href="https://wa.me/917879881483?text=Hi%20The%20Cake%20Durbar,%20I%20want%20to%20order%20a%20cake." class="nav-btn" target="_blank">
+        <div class="nav-icon">💬</div>
+        WhatsApp
+      </a>
+      <a href="tel:+917879881483" class="nav-btn">
+        <div class="nav-icon">📞</div>
+        Call Us
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const reviewsData = {
+      all: {
+        en: [
+          "Hands down one of the best cake shops in Bhopal! Ultra-fresh cakes, rich flavor, and lovely designs. 5-star experience!",
+          "Ordered a birthday cake from The Cake Durbar and it was a super hit! Soft sponge, perfect sweetness, and polite staff.",
+          "Great taste and premium bakery quality in Bawadiya Kalan. Highly recommended for birthday celebrations!"
+        ],
+        hi: [
+          "Bhopal me birthday cakes ke liye best jagah hai! Cake bohot soft aur fresh tha, sweetness bhi bilkul perfect thi.",
+          "The Cake Durbar se cake lekar pura celebration memorable ho gaya. Freshness aur packaging 10 out of 10!",
+          "Bawadiya Kalan me sabse best cake shop! Har flavor ka taste premium hai aur staff ka behaviour bohot polite hai."
+        ]
+      },
+      taste: {
+        en: [
+          "The chocolate truffle cake was heavenly! Perfectly moist, super fresh, and melt-in-the-mouth texture. Top quality bakes!",
+          "Truly authentic fresh bakes! Ordered an eggless cake and the texture was extraordinarily soft. Best in Bhopal."
+        ],
+        hi: [
+          "Inka chocolate truffle aur fresh pastries next level hain! Bread ekdum fresh aur soft thi, sabhi ko bohot pasand aaya.",
+          "Eggless cakes me itna soft aur tasty texture Bhopal me kam hi milta hai. Paisa vasool taste!"
+        ]
+      },
+      custom: {
+        en: [
+          "Got a customized theme cake made and they nailed the design exact to the reference image! Very neat finish and detailing.",
+          "Spectacular custom fondant finishing! Looked magnificent on the table and tasted equally delicious. 10/10 recommended!"
+        ],
+        hi: [
+          "Customized designer cake bilkul photo jaisa banakar diya! Finishing bohot clean thi aur design ekdum flawless laga.",
+          "Theme cake ki detailing shaandar thi. Decoration aur taste dono me inhone full justice kiya!"
+        ]
+      },
+      service: {
+        en: [
+          "Lifesaver midnight cake service in Bhopal! Delivered right on time with neat packaging and intact toppings. Super reliable!",
+          "Very courteous staff and quick counter packing. They helped pick the best flavor patiently. Excellent service!"
+        ],
+        hi: [
+          "Bhopal me midnight celebration ke liye sabse reliable cake shop! Time par delivery hui aur packing safe thi.",
+          "Staff ka nature bohot supportive hai aur service kaafi fast hai. Birthday candle aur tag proper tarike se pack kiya."
+        ]
+      }
+    };
+
+    let activeCategory = 'all';
+    let activeLang = 'en';
+    const reviewRedirectUrl = "https://search.google.com/local/writereview?placeid=ChIJj7J_eABDfDkRUNJROTNzRuY";
+
+    function updateReviewText() {
+      const textEl = document.getElementById('review-content');
+      textEl.style.opacity = '0';
+      textEl.style.transform = 'translateY(4px)';
+
+      setTimeout(() => {
+        const list = reviewsData[activeCategory][activeLang];
+        const randomReview = list[Math.floor(Math.random() * list.length)];
+        textEl.innerText = `"${randomReview}"`;
+        textEl.style.opacity = '1';
+        textEl.style.transform = 'translateY(0)';
+      }, 150);
+    }
+
+    function setCategory(cat) {
+      activeCategory = cat;
+      document.querySelectorAll('.pill').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      updateReviewText();
+    }
+
+    function setLang(lang) {
+      activeLang = lang;
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+      updateReviewText();
+    }
+
+    function shuffleReview() {
+      updateReviewText();
+    }
+
+    function copyAndRedirect() {
+      const textToCopy = document.getElementById('review-content').innerText.replace(/^"|"$/g, '');
+      const btn = document.getElementById('copy-btn');
+
+      if (navigator.vibrate) { navigator.vibrate(50); }
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = "<span>✓</span> REVIEW COPIED! OPENING GOOGLE...";
+        setTimeout(() => {
+          window.location.href = reviewRedirectUrl;
+        }, 650);
+      }).catch(() => {
+        window.location.href = reviewRedirectUrl;
+      });
+    }
+
+    updateReviewText();
+  </script>
+</body>
+</html>
